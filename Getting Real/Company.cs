@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Getting_Real
 {
-    internal class Vogn
+    internal class Company
     {
     }
 }

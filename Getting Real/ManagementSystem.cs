@@ -9,53 +9,53 @@ namespace Getting_Real
         public void Start()
         {
 
-            // Hovedmenu
-            string overskrift = "--- Booking af vognkontrol hos Sydtrafik ---\n\nVælg ønsket menupunkt og tast enter.\n";
-            string[] hovedMenuPunkter = { "Bookingmenu", "Info om vognkontrol", "Opret bruger", "Afslut" };
-            MenuVisning hovedMenu = new MenuVisning(overskrift, hovedMenuPunkter);
-            int indexValgt = hovedMenu.Kør();
+            // Main Menu
+            string title = "--- Booking af vognkontrol hos Sydtrafik ---\n\nVælg ønsket menupunkt og tast enter.\n";
+            string[] MainMenuItems = { "Bookingmenu", "Info om vognkontrol", "Opret bruger", "Afslut" };
+            MenuDisplay mainMenu = new MenuDisplay(title, MainMenuItems);
+            int indexChosen = mainMenu.Run();
 
-            switch (indexValgt)
+            switch (indexChosen)
             {
-                case 0: // Bookingmenu - book tid, se/ ændre/ annullere booking
-                    VælgBrugerType();
+                case 0: // Bookingmenu - book appointment, view/ change/ cancel booking
+                    ChooseUserType();
                     break;
-                case 1: // Info om vognkontrol
-                    InfoOmVognkontrol();
+                case 1: // Info about car inspection
+                    CarInspectionInfo();
                     break;
-                case 2: // Opret bruger
-                    OpretBruger(); // Funktion til at oprette en ny bruger med login
+                case 2: // Register user
+                    RegisterUser(); // Functionality to be implemented
                     break;
-                case 3: // Afslut
-                    Afslut();
+                case 3: // Exit
+                    Exit();
                     return;
             }
 
         }
 
-        private void VælgBrugerType()
+        private void ChooseUserType()
         {
 
-            string overskrift = "--- Vælg din brugertype ---\n\nVælg ønsket brugertype og tast enter.\n";
-            string[] brugertypeMenupunkter = { "Vognmand", "Kontrollør", "Afslut" };
-            MenuVisning brugertypeMenu = new MenuVisning(overskrift, brugertypeMenupunkter);
-            int rolletypeValg = brugertypeMenu.Kør();
+            string title = "--- Vælg din brugertype ---\n\nVælg ønsket brugertype og tast enter.\n";
+            string[] userTypeMenuItems = { "Vognmand", "Kontrollør", "Afslut" };
+            MenuDisplay userTypeMenu = new MenuDisplay(title, userTypeMenuItems);
+            int userTypeChoice = userTypeMenu.Run();
 
-            switch (rolletypeValg)
+            switch (userTypeChoice)
             {
                 case 0:
-                    LoginVognmand("vognmand");
+                    LoginDriver("vognmand");
                     break;
                 case 1:
-                    LoginKontrollør("kontrollør");
+                    LoginInspector("kontrollør");
                     break;
                 case 2:
-                    Afslut();
+                    Exit();
                     break;
             }
         }
 
-        private void LoginVognmand(string rolletypeValg)
+        private void LoginDriver(string userTypeChoice)
         {
             Console.Clear();
             Console.WriteLine($"--- Login ---");
@@ -64,16 +64,16 @@ namespace Getting_Real
             string email = Console.ReadLine();
 
             Console.Write("Indtast adgangskode: ");
-            string adgangskode = Console.ReadLine();
+            string password = Console.ReadLine();
             Console.ReadKey();
 
-            KørVognmandMenu();
+            RunDriverMenu();
 
 
 
         }
 
-        private void LoginKontrollør(string rolletypeValg)
+        private void LoginInspector(string userTypeChoice)
         {
             Console.Clear();
             Console.WriteLine($"--- Login ---");
@@ -82,17 +82,17 @@ namespace Getting_Real
             string email = Console.ReadLine();
 
             Console.Write("Indtast adgangskode: ");
-            string adgangskode = Console.ReadLine();
+            string password = Console.ReadLine();
             Console.ReadKey();
 
-            KørKontrollørMenu();
+            RunInspectorMenu();
 
 
 
         }
 
 
-        private void OpretBruger()
+        private void RegisterUser()
         {
             Console.Clear();
             Console.WriteLine("Opret ny bruger");
@@ -102,7 +102,7 @@ namespace Getting_Real
             string email = Console.ReadLine();
 
             Console.Write("Indtast dit telefonnummer: ");
-            string telefon = Console.ReadLine();
+            string phone = Console.ReadLine();
 
             Console.WriteLine();
 
@@ -114,95 +114,95 @@ namespace Getting_Real
         }
 
 
-        private void KørVognmandMenu()
+        private void RunDriverMenu()
         {
-            string overskrift = "--- Vognmand Menu ---\n\nVælg ønsket menupunkt og tast enter.\n";
-            string[] vognmandMenuPunkter = { "Book vognkontrol", "Se booket tid", "Hovedmenu", "Afslut" };
-            var vognmandMenu = new MenuVisning(overskrift, vognmandMenuPunkter);
-            int indexValgt = vognmandMenu.Kør();
+            string title = "--- Vognmand Menu ---\n\nVælg ønsket menupunkt og tast enter.\n";
+            string[] driverMenuItems = { "Book vognkontrol", "Se booket tid", "Hovedmenu", "Afslut" };
+            var driverMenu = new MenuDisplay(title, driverMenuItems);
+            int indexChosen = driverMenu.Run();
 
-            switch (indexValgt)
+            switch (indexChosen)
             {
                 case 0:
-                    BookVognkontrol();
+                    BookCarInspection();
                     break;
                 case 1:
-                    SeBooketTid();
+                    ViewBookedTime();
                     break;
                 case 2:
                     Start();
                     break;
                 case 3:
-                    Afslut();
+                    Exit();
                     break;
             }
         }
 
-        private void KørKontrollørMenu()
+        private void RunInspectorMenu()
         {
-            string overskrift = "--- Kontrollør Menu ---\nVælg ønsket menupunkt og tast enter.\n";
-            string[] kontrollørMenuPunkter = { "Se bookede vognkontroller", "Hovedmenu", "Afslut" };
-            var kontrollørMenu = new MenuVisning(overskrift, kontrollørMenuPunkter);
-            int indexValgt = kontrollørMenu.Kør();
+            string title = "--- Kontrollør Menu ---\nVælg ønsket menupunkt og tast enter.\n";
+            string[] inspectorMenuItems = { "Se bookede vognkontroller", "Hovedmenu", "Afslut" };
+            var inspectorMenu = new MenuDisplay(title, inspectorMenuItems);
+            int indexChosen = inspectorMenu.Run();
 
-            switch (indexValgt)
+            switch (indexChosen)
             {
                 case 0:
-                    SeBookedeKontroller();
+                    ViewBookedTimes();
                     break;
                 case 1:
                     Start();
                     break;
                 case 2:
-                    Afslut();
+                    Exit();
                     break;
             }
         }
 
-        private void BookVognkontrol()
+        private void BookCarInspection()
         {
             Console.Clear();
             Console.WriteLine("Book vognkontrol");
             Console.WriteLine();
 
-            // implementere kode for booking af vognkontrol
+            // Implement code for booking a car inspection
 
             Console.WriteLine("Booking gennemført. Tryk på en vilkårlig tast for at vende tilbage til vognmandmenuen.");
             Console.ReadKey();
 
-            KørVognmandMenu();
+            RunDriverMenu();
 
         }
 
-        private void SeBooketTid()
+        private void ViewBookedTime()
         {
             Console.Clear();
             Console.WriteLine("Vis booket tid");
             Console.WriteLine();
 
-            // Implementere kode for at vise booket tid (vise, ændre, annullere)
+            // Implement code for viewing booked time
 
             Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til vognmandmenuen.");
             Console.ReadKey();
 
-            KørVognmandMenu();
+            RunDriverMenu();
         }
 
-        private void SeBookedeKontroller()
+        private void ViewBookedTimes()
         {
             Console.Clear();
             Console.WriteLine("Vis bookede vognkontroller");
             Console.WriteLine();
 
-            // Implementere kode for at vise bookede vognkontroller og detaljer om bookingerne
+            // implement code for viewing booked times and booking details 
 
             Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til kontrollørmenuen.");
             Console.ReadKey();
 
-            KørKontrollørMenu();
+            RunInspectorMenu();
         }
 
-        private void InfoOmVognkontrol()
+        private void CarInspectionInfo()
         {
             Console.Clear();
             Console.WriteLine("Information om vognkontrol");
@@ -213,7 +213,7 @@ namespace Getting_Real
             Start();
         }
 
-        private void Afslut()
+        private void Exit()
         {
             Console.Clear();
             Console.WriteLine("Programmet afsluttes...");
