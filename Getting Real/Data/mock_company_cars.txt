@@ -1,0 +1,140 @@
+6000;DanTaxi A/S;5911
+6001;DanTaxi A/S;5215
+6002;DanTaxi A/S;
+6003;DanTaxi A/S;5337
+6004;DanTaxi A/S;5287
+6005;DanTaxi A/S;
+6006;DanTaxi A/S;5536
+6007;DanTaxi A/S;
+6008;DanTaxi A/S;
+6009;DanTaxi A/S;5964
+6010;DanTaxi A/S;
+6011;DanTaxi A/S;
+6012;DanTaxi A/S;5607
+6013;DanTaxi A/S;
+6014;DanTaxi A/S;
+6015;DanTaxi A/S;5147
+6016;DanTaxi A/S;
+6017;DanTaxi A/S;
+6018;DanTaxi A/S;5938
+6019;DanTaxi A/S;
+6020;DanTaxi A/S;
+6021;DanTaxi A/S;
+6022;DanTaxi A/S;5273
+6023;DanTaxi A/S;5720
+6024;DanTaxi A/S;5307
+6025;DanTaxi A/S;
+6026;DanTaxi A/S;
+6027;DanTaxi A/S;5133
+6028;DanTaxi A/S;5214
+6029;DanTaxi A/S;5785
+6030;DanTaxi A/S;5938
+6031;DanTaxi A/S;
+6032;DanTaxi A/S;
+6033;DanTaxi A/S;
+6034;DanTaxi A/S;5182
+6035;DanTaxi A/S;
+6036;DanTaxi A/S;5766
+6037;DanTaxi A/S;5454
+6038;DanTaxi A/S;5043
+6039;DanTaxi A/S;
+6040;DanTaxi A/S;
+6041;DanTaxi A/S;5547
+6042;DanTaxi A/S;
+6043;DanTaxi A/S;5748
+6044;DanTaxi A/S;5135
+6045;DanTaxi A/S;5079
+6046;DanTaxi A/S;
+6047;DanTaxi A/S;5703
+6048;DanTaxi A/S;5877
+6049;DanTaxi A/S;5109
+6050;ByTaxi ApS;
+6051;ByTaxi ApS;5433
+6052;ByTaxi ApS;5494
+6053;ByTaxi ApS;5978
+6054;ByTaxi ApS;
+6055;ByTaxi ApS;5068
+6056;ByTaxi ApS;
+6057;ByTaxi ApS;5734
+6058;ByTaxi ApS;
+6059;ByTaxi ApS;5627
+6060;ByTaxi ApS;
+6061;ByTaxi ApS;5357
+6062;VestByens Taxi ApS;
+6063;VestByens Taxi ApS;5653
+6064;VestByens Taxi ApS;5578
+6065;VestByens Taxi ApS;
+6066;VestByens Taxi ApS;
+6067;VestByens Taxi ApS;5815
+6068;VestByens Taxi ApS;5226
+6069;VestByens Taxi ApS;
+6070;VestByens Taxi ApS;5711
+6071;VestByens Taxi ApS;5307
+6072;VestByens Taxi ApS;
+6073;VestByens Taxi ApS;5329
+6074;SydKørsel A/S;5047
+6075;SydKørsel A/S;
+6076;ØstTransport ApS;
+6077;ØstTransport ApS;5027
+6078;MidtbyTaxi ApS;
+6079;MidtbyTaxi ApS;5276
+6080;NordKørsel ApS;
+6081;NordKørsel ApS;
+6082;HavneByens Taxi ApS;5803
+6083;HavneByens Taxi ApS;5022
+6084;Annas Taxi;5453
+6085;Stefans Taxi;5126
+6086;Jespers Taxi;
+6087;Sannes Taxi;
+6088;Mikkels Transport;5241
+6089;Tinas Taxi;5770
+6090;Yvonnes Taxi;
+6091;Louises Taxi;5470
+6092;Sannes Transport;
+6093;Thomass Transport;5251
+6094;Henriksens Transport;
+6095;Henriksens Taxi;
+6096;Allans Taxi;
+6097;Tinas Transport;
+6098;Nielsens Taxi;
+6099;Marias Taxi;
+6100;Astrids Taxi;
+6101;Lones Taxi;
+6102;Frejas Transport;
+6103;Vituss Taxi;
+6104;Sørens Taxi;5225
+6105;Louises Transport;
+6106;Peters Taxi;
+6107;Rasmuss Taxi;
+6108;Marias Transport;5274
+6109;Astrids Transport;
+6110;Peters Transport;
+6111;Pers Transport;5859
+6112;Sørens Transport;5247
+6113;Dortes Transport;
+6114;Karens Transport;
+6115;Henriks Taxi;
+6116;Kenneths Transport;
+6117;Jakobs Transport;
+6118;Idas Transport;5898
+6119;Karens Taxi;
+6120;Jespers Transport;5116
+6121;Rikkes Transport;5062
+6122;Camillas Transport;5260
+6123;Ebbes Transport;5015
+6124;Annas Transport;
+6125;Rikkes Taxi;
+6126;Idas Taxi;5593
+6127;Kenneths Taxi;5087
+6128;Mikkels Taxi;
+6129;Bos Transport;
+6130;Pers Taxi;
+6131;Ebbes Taxi;
+6132;Frejas Taxi;
+6133;Olivers Transport;5451
+6134;Camillas Taxi;
+6135;Nielsens Transport;5691
+6136;Stefans Transport;
+6137;Mias Transport;
+6138;Lones Transport;
+6139;Thomass Taxi;
