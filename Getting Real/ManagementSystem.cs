@@ -140,7 +140,7 @@ namespace Getting_Real
 
         private void RunInspectorMenu()
         {
-            string title = "--- Kontrollør Menu ---\nVælg ønsket menupunkt og tast enter.\n";
+            string title = "--- Kontrollør Menu ---\n\nVælg ønsket menupunkt og tast enter.\n";
             string[] inspectorMenuItems = { "Se bookede vognkontroller", "Hovedmenu", "Afslut" };
             var inspectorMenu = new MenuDisplay(title, inspectorMenuItems);
             int indexChosen = inspectorMenu.Run();
