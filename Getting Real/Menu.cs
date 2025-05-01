@@ -2,60 +2,60 @@
 
 namespace Getting_Real
 {
-    public class MenuVisning
+    public class MenuDisplay
     {
-        private int _indexValgt;
-        private string[] _menuPunkter;
-        private string _overskrift;
+        private int _indexChosen;
+        private string[] _menuItems;
+        private string _title;
 
-        public MenuVisning(string overskrift, string[] menuPunkter)
+        public MenuDisplay(string title, string[] menuItems)
         {
-            _indexValgt = 0;
-            _menuPunkter = menuPunkter;
-            _overskrift = overskrift;
+            _indexChosen = 0;
+            _menuItems = menuItems;
+            _title = title;
         }
 
-        public int Kør()
+        public int Run()
         {
-            ConsoleKey tastInput;
+            ConsoleKey userInput;
             do
             {
                 Console.Clear();
-                VisMenuPunkter();
+                ShowMenuItems();
 
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                tastInput = keyInfo.Key;
+                userInput = keyInfo.Key;
 
-                if (tastInput == ConsoleKey.UpArrow)
+                if (userInput == ConsoleKey.UpArrow)
                 {
-                    _indexValgt--;
-                    if (_indexValgt == -1)
+                    _indexChosen--;
+                    if (_indexChosen == -1)
                     {
-                        _indexValgt = _menuPunkter.Length - 1;
+                        _indexChosen = _menuItems.Length - 1;
                     }
                 }
-                else if (tastInput == ConsoleKey.DownArrow)
+                else if (userInput == ConsoleKey.DownArrow)
                 {
-                    _indexValgt++;
-                    if (_indexValgt == _menuPunkter.Length)
+                    _indexChosen++;
+                    if (_indexChosen == _menuItems.Length)
                     {
-                        _indexValgt = 0;
+                        _indexChosen = 0;
                     }
                 }
-            } while (tastInput != ConsoleKey.Enter);
+            } while (userInput != ConsoleKey.Enter);
 
-            return _indexValgt;
+            return _indexChosen;
         }
 
-        private void VisMenuPunkter()
+        private void ShowMenuItems()
         {
-            Console.WriteLine(_overskrift);
-            for (int i = 0; i < _menuPunkter.Length; i++)
+            Console.WriteLine(_title);
+            for (int i = 0; i < _menuItems.Length; i++)
             {
-                string valgtMenuPunkt = _menuPunkter[i];
+                string ChosenMenuItem = _menuItems[i];
                 string prefix;
 
-                if (i == _indexValgt)
+                if (i == _indexChosen)
                 {
                     prefix = "*";
                     Console.ForegroundColor = ConsoleColor.Black;
@@ -67,7 +67,7 @@ namespace Getting_Real
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
-                Console.WriteLine($"{prefix} << {valgtMenuPunkt} >>");
+                Console.WriteLine($"{prefix} << {ChosenMenuItem} >>");
             }
             Console.WriteLine();
             Console.ResetColor();
