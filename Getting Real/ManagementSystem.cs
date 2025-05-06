@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace Getting_Real
 {
@@ -172,10 +173,7 @@ namespace Getting_Real
             //Vis tider og vælg
             Console.Clear();
             Console.WriteLine("--- Ledige tider ---\n");
-            for (int i = 0; i < availableTimes.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {availableTimes[i]:dd-MM-yyyy HH:mm}");
-            }
+            ListFormatter.PrintTimeslotsAsTable(availableTimes);
 
             Console.Write("\nVælg en tid (nummer): ");
             if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > availableTimes.Count)
@@ -208,7 +206,35 @@ namespace Getting_Real
 
             //Tjek om vogn allerede er booket
             var bookingLines = handler.LoadBookings();
-            bool carAlreadyBooked = bookingLines.Any(line => line.Split(';')[1] == carId);
+
+            Console.WriteLine("\n--- BOOKINGLINJER ---");
+            foreach (var line in bookingLines)
+            {
+                Console.WriteLine($"[{line.Split(';')[1]}]"); // Vogn-ID i filen
+            }
+            Console.WriteLine($"\nBrugerindtastet vognID: [{carId}]");
+
+            bool carAlreadyBooked = bookingLines
+                .Any(line => line.Split(';')[1].Trim() == carId.Trim());
+
+            /* Debugging
+             * 
+             *  Console.WriteLine("\n--- DEBUG VOGN-ID FRA FILEN ---");
+            foreach (var line in bookingLines)
+            {37
+                var split = line.Split(';');
+                if (split.Length > 1)
+                {
+                    Console.WriteLine($"ID: {split[0]}, VognID: [{split[1]}]");
+                }
+                else
+                {
+                    Console.WriteLine("⚠️ Ugyldig linje: " + line);
+                }
+            }
+             * 
+             */
+
 
             if (carAlreadyBooked)
             {
@@ -226,11 +252,24 @@ namespace Getting_Real
             // Gem ny booking
             string newLine = $"{nextBookingId};{carId};{company};{email};{phone};{selectedTime:yyyy-MM-dd HH:mm}";
             bookingLines.Add(newLine);
+
+            Console.WriteLine("[DEBUG] Skriver til bookings-fil:");
+            Console.WriteLine(Path.GetFullPath("Data/mock_bookings.txt"));
+
             handler.SaveBookings(bookingLines);
 
             //Bekræft
             Console.WriteLine("\nBooking gennemført!");
-            Console.WriteLine("Tryk en tast for at vende tilbage.");
+            Console.WriteLine("\nBookingdetaljer:");
+            Console.WriteLine($"Booking ID : {nextBookingId}");
+            Console.WriteLine($"Dato & Tid : {selectedTime:dd-MM-yyyy HH:mm}");
+            Console.WriteLine($"Selskab    : {company}");
+            Console.WriteLine($"Vogn-ID    : {carId}");
+            Console.WriteLine($"E-mail     : {email}");
+            Console.WriteLine($"Telefon    : {phone}");
+
+
+            Console.WriteLine("\nTryk en tast for at vende tilbage.");
             Console.ReadKey();
 
             RunDriverMenu();

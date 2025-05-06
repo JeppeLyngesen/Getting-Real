@@ -18,9 +18,9 @@ namespace Getting_Real
 {
     public class Datahandler
     {
-        private readonly string _bookingsFile = @"Data/mock_bookings.txt";
-        private readonly string _companiesFile = @"Data/mock_company_cars.txt";
-        private readonly string _timeslotsFile = @"Data/mock_timeslots.txt";
+        private readonly string _bookingsFile = Path.Combine("../../../Data/mock_bookings.txt");
+        private readonly string _companiesFile = Path.Combine("../../../Data/mock_company_cars.txt");
+        private readonly string _timeslotsFile = Path.Combine("../../../Data/mock_timeslots.txt");
 
         public List<string> LoadBookings()
         {
