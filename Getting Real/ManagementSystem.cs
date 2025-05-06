@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Getting_Real
 {
     public class ManagementSystem
     {
-
         public void Start()
         {
 
@@ -124,6 +124,7 @@ namespace Getting_Real
             switch (indexChosen)
             {
                 case 0:
+                    //Debug_BookCarInspection();
                     BookCarInspection();
                     break;
                 case 1:
@@ -135,6 +136,7 @@ namespace Getting_Real
                 case 3:
                     Exit();
                     break;
+                
             }
         }
 
@@ -161,7 +163,81 @@ namespace Getting_Real
 
         private void BookCarInspection()
         {
+            
+            var handler = new Datahandler();
+
+            //Indlæser ledige tider
+            var availableTimes = GetAvailableTimes();
+
+            //Vis tider og vælg
             Console.Clear();
+            Console.WriteLine("--- Ledige tider ---\n");
+            for (int i = 0; i < availableTimes.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {availableTimes[i]:dd-MM-yyyy HH:mm}");
+            }
+
+            Console.Write("\nVælg en tid (nummer): ");
+            if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > availableTimes.Count)
+            {
+                Console.WriteLine("Ugyldigt valg.");
+                Console.ReadKey();
+                return;
+            }
+
+            DateTime selectedTime = availableTimes[choice - 1];
+
+            //Indtast bookingoplysninger
+            Console.Write("\nIndtast selskabsnavn: ");
+            string company = Console.ReadLine();
+
+            Console.Write("Indtast e-mail: ");
+            string email = Console.ReadLine();
+            if (!email.Contains("@") || !email.Contains("."))
+            {
+                Console.WriteLine("Ugyldig e-mail.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("Indtast telefonnummer: ");
+            string phone = Console.ReadLine();
+
+            Console.Write("Indtast vogn-ID: ");
+            string carId = Console.ReadLine();
+
+            //Tjek om vogn allerede er booket
+            var bookingLines = handler.LoadBookings();
+            bool carAlreadyBooked = bookingLines.Any(line => line.Split(';')[1] == carId);
+
+            if (carAlreadyBooked)
+            {
+                Console.WriteLine("Denne vogn er allerede booket.");
+                Console.ReadKey();
+                return;
+            }
+
+            //Tildel unikt BookingID
+            int nextBookingId = bookingLines
+                .Select(line => int.Parse(line.Split(';')[0]))
+                .DefaultIfEmpty(1000)
+                .Max() + 1;
+
+            // Gem ny booking
+            string newLine = $"{nextBookingId};{carId};{company};{email};{phone};{selectedTime:yyyy-MM-dd HH:mm}";
+            bookingLines.Add(newLine);
+            handler.SaveBookings(bookingLines);
+
+            //Bekræft
+            Console.WriteLine("\nBooking gennemført!");
+            Console.WriteLine("Tryk en tast for at vende tilbage.");
+            Console.ReadKey();
+
+            RunDriverMenu();
+
+
+
+            /*Console.Clear();
             Console.WriteLine("Book vognkontrol");
             Console.WriteLine();
 
@@ -170,7 +246,7 @@ namespace Getting_Real
             Console.WriteLine("Booking gennemført. Tryk på en vilkårlig tast for at vende tilbage til vognmandmenuen.");
             Console.ReadKey();
 
-            RunDriverMenu();
+            RunDriverMenu();*/
 
         }
 
@@ -220,6 +296,68 @@ namespace Getting_Real
             Thread.Sleep(2000);
 
 
+        }
+
+        List<DateTime> GetAvailableTimes()
+        {
+            var handler = new Datahandler();
+
+            //alle de ledige tider fra mock_timeslots
+            var allTimes = handler.LoadTimeslots()
+            .Select(line => 
+                    {
+                        var parts = line.Split(';');
+                        return DateTime.Parse(parts[0]).Add(TimeSpan.Parse(parts[1]));
+                    }).ToList();
+
+            //allerede bookede tider fra vores mock_booking
+            var bookedTimes = handler.LoadBookings()
+                .Select(line => DateTime.Parse(line.Split(';')[5]))
+                .ToHashSet();
+
+            //tilgængelige tider, efter de bookede er trukket fra
+            return allTimes.Except(bookedTimes).ToList();
+        }
+
+
+        private void Debug_BookCarInspection()
+        {
+            Console.Clear();
+            Console.WriteLine("--- DEBUG: BookCarInspection ---");
+
+            try
+            {
+                Console.WriteLine("🔹 Kører GetAvailableTimes()");
+                var times = GetAvailableTimes();
+
+                Console.WriteLine($"🔹 Ledige tider fundet: {times.Count}");
+                foreach (var t in times.Take(5)) // Vis kun 5 første
+                {
+                    Console.WriteLine($"   - {t:yyyy-MM-dd HH:mm}");
+                }
+
+                Console.WriteLine("🔹 Henter eksisterende bookinger...");
+                var handler = new Datahandler();
+                var bookings = handler.LoadBookings();
+                Console.WriteLine($"   Antal bookinger: {bookings.Count}");
+
+                Console.WriteLine("🔹 Forsøger at generere nyt bookingID...");
+                int nextId = bookings
+                    .Select(line => int.Parse(line.Split(';')[0]))
+                    .DefaultIfEmpty(1000)
+                    .Max() + 1;
+                Console.WriteLine($"   Næste bookingID: {nextId}");
+
+                Console.WriteLine("\n✅ Alt ser ud til at virke.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n🛑 FEJL opstod: {ex.Message}");
+            }
+
+            Console.WriteLine("\nTryk en tast for at vende tilbage.");
+            Console.ReadKey();
+            RunDriverMenu();
         }
     }
 }

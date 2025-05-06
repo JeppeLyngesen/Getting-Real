@@ -8,4 +8,25 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Data\mock_bookings.txt" />
+    <None Remove="Data\mock_company_cars.txt" />
+    <None Remove="Data\mock_timeslots.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\mock_bookings.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\mock_company_cars.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\mock_timeslots.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
