@@ -8,7 +8,7 @@ namespace Getting_Real
 {
     public static class ListFormatter
     {
-        public static void PrintTimeslotsAsTable(List<DateTime> timeslots) //mulighed, men er ikke tilfreds
+        public static void PrintTimeslotsAsTable(List<DateTime> timeslots)
         {
             var grouped = timeslots
                 .GroupBy(t => t.Date)
@@ -18,13 +18,82 @@ namespace Getting_Real
 
             foreach (var group in grouped)
             {
-                Console.Write($"{group.Key:dd - MM - yyyy}:\t");
+                Console.WriteLine($"{group.Key:dd - MM - yyyy}:\t");
 
                 var times = group.OrderBy(t => t.TimeOfDay)
                     .Select(t => t.ToString("HH:mm"));
 
                 Console.WriteLine(string.Join("   ", times));
+                Console.WriteLine(" ");
             }
         }
+
+        public static DateTime? PromptUserToSelectTimeslot(List<DateTime> timeslots)
+        {
+            const int pageSize = 10;
+            var ordered = timeslots.OrderBy(t => t).ToList();
+            int currentPage = 0;
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("--- Vælg en ledig tid ---\n");
+
+                int start = currentPage * pageSize;
+                int end = Math.Min(start + pageSize, ordered.Count);
+
+                for (int i = start; i < end; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {ordered[i]:dd-MM-yyyy HH:mm}");
+                }
+
+                Console.WriteLine("\n(d = næste side, a = forrige, w = annullér)");
+                Console.Write("Indtast nummer på ønsket booking tid, for at booke: ");
+                string input = Console.ReadLine()?.Trim().ToLower();
+
+                if (input == "w")
+                    return null;
+                if (input == "d" && end < ordered.Count)
+                {
+                    currentPage++;
+                    continue;
+                }
+                if (input == "a" && currentPage > 0)
+                {
+                    currentPage--;
+                    continue;
+                }
+                if (int.TryParse(input, out int choice) &&
+                    choice >= 1 && choice <= ordered.Count)
+                {
+                    return ordered[choice - 1];
+                }
+
+                Console.WriteLine("Ugyldigt input. Tryk en tast for at prøve igen.");
+                Console.ReadKey();
+            }
+        }
+
     }
 }
+/* public static void PrintTimeslotsAsTable(List<DateTime> timeslots) //mulighed, men er ikke tilfreds
+        {
+            var grouped = timeslots
+                .GroupBy(t => t.Date)
+                .OrderBy(g => g.Key);
+
+            Console.WriteLine("Ledige Tider:\n");
+
+            foreach (var group in grouped)
+            {
+                Console.WriteLine($"{group.Key:dd - MM - yyyy}:\t");
+                
+                var times = group.OrderBy(t => t.TimeOfDay)
+                    .Select(t => t.ToString("HH:mm"));
+
+                Console.WriteLine(string.Join("   ", times));
+                Console.WriteLine(" ");
+            }
+        }
+
+*/

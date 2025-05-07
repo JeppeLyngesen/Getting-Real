@@ -173,17 +173,16 @@ namespace Getting_Real
             //Vis tider og vælg
             Console.Clear();
             Console.WriteLine("--- Ledige tider ---\n");
-            ListFormatter.PrintTimeslotsAsTable(availableTimes);
+            DateTime? selectedTime = ListFormatter.PromptUserToSelectTimeslot(availableTimes);
 
-            Console.Write("\nVælg en tid (nummer): ");
-            if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > availableTimes.Count)
+            if (selectedTime == null)
             {
-                Console.WriteLine("Ugyldigt valg.");
+                Console.WriteLine("Booking annulleret.");
                 Console.ReadKey();
                 return;
             }
 
-            DateTime selectedTime = availableTimes[choice - 1];
+            DateTime selectedTimeValue = selectedTime.Value;
 
             //Indtast bookingoplysninger
             Console.Write("\nIndtast selskabsnavn: ");
