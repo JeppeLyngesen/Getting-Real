@@ -74,6 +74,44 @@ namespace Getting_Real
             }
         }
 
+        public static void PrintBookingsWithCarID(List<string> bookings)
+
+        {
+            if (bookings == null || bookings.Count == 0)
+            {
+                Console.WriteLine("Ingen bookinger at vise");
+                return;
+            }
+
+            var bookingData = bookings
+                .Select(line => line.Split(';'))
+                .Where(parts => parts.Length >= 6) // fix: >= i stedet for > 6
+                .Select(parts => new
+                {
+                    Time = DateTime.Parse(parts[5]),
+                    CarID = parts[1],
+                })
+                .OrderBy(b => b.Time)
+                .ToList();
+
+            var grouped = bookingData.GroupBy(b => b.Time.Date);
+
+            Console.WriteLine("Dine bookinger:\n");
+
+            foreach (var group in grouped)
+            {
+                Console.WriteLine($"{group.Key:dd-MM-yyyy}:\t");
+
+                foreach (var booking in group.OrderBy(b => b.Time.TimeOfDay))
+                {
+                    Console.WriteLine($"  {booking.Time:HH:mm}  -  Vogn: {booking.CarID}");
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+
     }
 }
 /* public static void PrintTimeslotsAsTable(List<DateTime> timeslots) //mulighed, men er ikke tilfreds
@@ -82,8 +120,8 @@ namespace Getting_Real
                 .GroupBy(t => t.Date)
                 .OrderBy(g => g.Key);
 
-            Console.WriteLine("Ledige Tider:\n");
-
+           
+ Console.WriteLine("Ledige Tider:\n");
             foreach (var group in grouped)
             {
                 Console.WriteLine($"{group.Key:dd - MM - yyyy}:\t");

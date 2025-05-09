@@ -7,6 +7,8 @@ namespace Getting_Real
 {
     public class ManagementSystem
     {
+        private string _loggedInEmail;
+
         public void Start()
         {
 
@@ -38,14 +40,14 @@ namespace Getting_Real
         {
 
             string title = "--- Vælg din brugertype ---\n\nVælg ønsket brugertype og tast enter.\n";
-            string[] userTypeMenuItems = { "Vognmand", "Kontrollør", "Afslut" };
+            string[] userTypeMenuItems = { "Selskab", "Kontrollør", "Afslut" };
             MenuDisplay userTypeMenu = new MenuDisplay(title, userTypeMenuItems);
             int userTypeChoice = userTypeMenu.Run();
 
             switch (userTypeChoice)
             {
                 case 0:
-                    LoginDriver("vognmand");
+                    LoginCompany("selskab");
                     break;
                 case 1:
                     LoginInspector("kontrollør");
@@ -56,13 +58,14 @@ namespace Getting_Real
             }
         }
 
-        private void LoginDriver(string userTypeChoice)
+        private void LoginCompany(string userTypeChoice)
         {
             Console.Clear();
             Console.WriteLine($"--- Login ---");
             Console.WriteLine();
             Console.Write("Indtast din e-mail: ");
             string email = Console.ReadLine();
+            _loggedInEmail = email; // Gemmer email til senere brug i ViewBookedTimeCompany
 
             Console.Write("Indtast adgangskode: ");
             string password = Console.ReadLine();
@@ -129,7 +132,7 @@ namespace Getting_Real
                     BookCarInspection();
                     break;
                 case 1:
-                    ViewBookedTime();
+                    ViewBookedTimeCompany();
                     break;
                 case 2:
                     Start();
@@ -228,7 +231,7 @@ namespace Getting_Real
                 }
                 else
                 {
-                    Console.WriteLine("⚠️ Ugyldig linje: " + line);
+                    Console.WriteLine("Ugyldig linje: " + line);
                 }
             }
              * 
@@ -288,35 +291,53 @@ namespace Getting_Real
 
         }
 
-        private void ViewBookedTime()
+        private void ViewBookedTimeCompany() //Chauffør side
         {
             Console.Clear();
-            Console.WriteLine("Vis booket tid");
-            Console.WriteLine();
+            Console.WriteLine("--- Dine bookinger ---\n");
 
-            // Implement code for viewing booked time
+            var handler = new Datahandler();
+            var allBookings = handler.LoadBookings();
 
-            Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til vognmandmenuen.");
-            Console.ReadKey();
+            var userBookings = allBookings
+                .Where(line => line.Split(';')[3].Trim().Equals(_loggedInEmail, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (!userBookings.Any())
+            {
+                Console.WriteLine("Du har ingen aktive bookinger.");
+                Console.WriteLine("Tryk på en vilkårlig tast for at gå tilbage.");
+                Console.ReadKey();
+                RunDriverMenu();
+                return;
+            }
+
+            ListFormatter.PrintBookingsWithCarID(userBookings);
+
+            Console.WriteLine("\nVælg et nummer for at slette booking, eller tryk [Enter] for at gå tilbage.");
+            var input = Console.ReadLine();
+            if (int.TryParse(input, out int choice) && choice >= 1 && choice <= userBookings.Count)
+            {
+                allBookings.Remove(userBookings[choice - 1]);
+                handler.SaveBookings(allBookings);
+                Console.WriteLine("\nBooking slettet.");
+            }
 
             RunDriverMenu();
         }
 
-        private void ViewBookedTimes()
+        private void ViewBookedTimes() //Kontrollør side
         {
             Console.Clear();
             Console.WriteLine("Vis bookede vognkontroller");
-            Console.WriteLine();
-
-            // implement code for viewing booked times and booking details 
-
+            
             Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til kontrollørmenuen.");
             Console.ReadKey();
 
             RunInspectorMenu();
         }
 
-        private void CarInspectionInfo()
+        private void CarInspectionInfo() 
         {
             Console.Clear();
             Console.WriteLine("Information om vognkontrol");
@@ -355,6 +376,17 @@ namespace Getting_Real
 
             //tilgængelige tider, efter de bookede er trukket fra
             return allTimes.Except(bookedTimes).ToList();
+        }
+
+        public List<DateTime> GetCompanyBookedTimes(string company)  //Henter bookinger baseret på selskab
+        {
+            var handler = new Datahandler();
+            var companyBookings = handler.LoadBookings()
+                .Where(line => line.Split(';')[2].Trim().Equals(company, StringComparison.OrdinalIgnoreCase))
+                .Select(line => DateTime.Parse(line.Split(';')[5]))
+                .ToList();
+
+            return companyBookings;
         }
 
 
