@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace Getting_Real
 {
     public class ManagementSystem
     {
+        private string _loggedInEmail;
+
         public void Start()
         {
 
@@ -42,14 +45,14 @@ namespace Getting_Real
         {
 
             string title = "--- Vælg din brugertype ---\n\nVælg ønsket brugertype og tast enter.\n";
-            string[] userTypeMenuItems = { "Vognmand", "Kontrollør", "Afslut" };
+            string[] userTypeMenuItems = { "Selskab", "Kontrollør", "Afslut" };
             MenuDisplay userTypeMenu = new MenuDisplay(title, userTypeMenuItems);
             int userTypeChoice = userTypeMenu.Run();
 
             switch (userTypeChoice)
             {
                 case 0:
-                    LoginDriver("vognmand");
+                    LoginCompany("selskab");
                     break;
                 case 1:
                     LoginInspector("kontrollør");
@@ -60,13 +63,14 @@ namespace Getting_Real
             }
         }
 
-        private void LoginDriver(string userTypeChoice)
+        private void LoginCompany(string userTypeChoice)
         {
             Console.Clear();
             Console.WriteLine($"--- Login ---");
             Console.WriteLine();
             Console.Write("Indtast din e-mail: ");
             string email = Console.ReadLine();
+            _loggedInEmail = email; // Gemmer email til senere brug i ViewBookedTimeCompany
 
             Console.Write("Indtast adgangskode: ");
             string password = Console.ReadLine();
@@ -133,7 +137,7 @@ namespace Getting_Real
                     BookCarInspection();
                     break;
                 case 1:
-                    ViewBookedTime();
+                    ViewBookedTimeCompany();
                     break;
                 case 2:
                     Start();
@@ -177,20 +181,16 @@ namespace Getting_Real
             //Vis tider og vælg
             Console.Clear();
             Console.WriteLine("--- Ledige tider ---\n");
-            for (int i = 0; i < availableTimes.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {availableTimes[i]:dd-MM-yyyy HH:mm}");
-            }
+            DateTime? selectedTime = ListFormatter.PromptUserToSelectTimeslot(availableTimes);
 
-            Console.Write("\nVælg en tid (nummer): ");
-            if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > availableTimes.Count)
+            if (selectedTime == null)
             {
-                Console.WriteLine("Ugyldigt valg.");
+                Console.WriteLine("Booking annulleret.");
                 Console.ReadKey();
                 return;
             }
 
-            DateTime selectedTime = availableTimes[choice - 1];
+            DateTime selectedTimeValue = selectedTime.Value;
 
             //Indtast bookingoplysninger
             Console.Write("\nIndtast selskabsnavn: ");
@@ -213,7 +213,35 @@ namespace Getting_Real
 
             //Tjek om vogn allerede er booket
             var bookingLines = handler.LoadBookings();
-            bool carAlreadyBooked = bookingLines.Any(line => line.Split(';')[1] == carId);
+
+            Console.WriteLine("\n--- BOOKINGLINJER ---");
+            foreach (var line in bookingLines)
+            {
+                Console.WriteLine($"[{line.Split(';')[1]}]"); // Vogn-ID i filen
+            }
+            Console.WriteLine($"\nBrugerindtastet vognID: [{carId}]");
+
+            bool carAlreadyBooked = bookingLines
+                .Any(line => line.Split(';')[1].Trim() == carId.Trim());
+
+            /* Debugging
+             * 
+             *  Console.WriteLine("\n--- DEBUG VOGN-ID FRA FILEN ---");
+            foreach (var line in bookingLines)
+            {37
+                var split = line.Split(';');
+                if (split.Length > 1)
+                {
+                    Console.WriteLine($"ID: {split[0]}, VognID: [{split[1]}]");
+                }
+                else
+                {
+                    Console.WriteLine("Ugyldig linje: " + line);
+                }
+            }
+             * 
+             */
+
 
             if (carAlreadyBooked)
             {
@@ -231,11 +259,24 @@ namespace Getting_Real
             // Gem ny booking
             string newLine = $"{nextBookingId};{carId};{company};{email};{phone};{selectedTime:yyyy-MM-dd HH:mm}";
             bookingLines.Add(newLine);
+
+            Console.WriteLine("[DEBUG] Skriver til bookings-fil:");
+            Console.WriteLine(Path.GetFullPath("Data/mock_bookings.txt"));
+
             handler.SaveBookings(bookingLines);
 
             //Bekræft
             Console.WriteLine("\nBooking gennemført!");
-            Console.WriteLine("Tryk en tast for at vende tilbage.");
+            Console.WriteLine("\nBookingdetaljer:");
+            Console.WriteLine($"Booking ID : {nextBookingId}");
+            Console.WriteLine($"Dato & Tid : {selectedTime:dd-MM-yyyy HH:mm}");
+            Console.WriteLine($"Selskab    : {company}");
+            Console.WriteLine($"Vogn-ID    : {carId}");
+            Console.WriteLine($"E-mail     : {email}");
+            Console.WriteLine($"Telefon    : {phone}");
+
+
+            Console.WriteLine("\nTryk en tast for at vende tilbage.");
             Console.ReadKey();
 
             RunDriverMenu();
@@ -255,35 +296,53 @@ namespace Getting_Real
 
         }
 
-        private void ViewBookedTime()
+        private void ViewBookedTimeCompany() //Chauffør side
         {
             Console.Clear();
-            Console.WriteLine("Vis booket tid");
-            Console.WriteLine();
+            Console.WriteLine("--- Dine bookinger ---\n");
 
-            // Implement code for viewing booked time
+            var handler = new Datahandler();
+            var allBookings = handler.LoadBookings();
 
-            Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til vognmandmenuen.");
-            Console.ReadKey();
+            var userBookings = allBookings
+                .Where(line => line.Split(';')[3].Trim().Equals(_loggedInEmail, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (!userBookings.Any())
+            {
+                Console.WriteLine("Du har ingen aktive bookinger.");
+                Console.WriteLine("Tryk på en vilkårlig tast for at gå tilbage.");
+                Console.ReadKey();
+                RunDriverMenu();
+                return;
+            }
+
+            ListFormatter.PrintBookingsWithCarID(userBookings);
+
+            Console.WriteLine("\nVælg et nummer for at slette booking, eller tryk [Enter] for at gå tilbage.");
+            var input = Console.ReadLine();
+            if (int.TryParse(input, out int choice) && choice >= 1 && choice <= userBookings.Count)
+            {
+                allBookings.Remove(userBookings[choice - 1]);
+                handler.SaveBookings(allBookings);
+                Console.WriteLine("\nBooking slettet.");
+            }
 
             RunDriverMenu();
         }
 
-        private void ViewBookedTimes()
+        private void ViewBookedTimes() //Kontrollør side
         {
             Console.Clear();
             Console.WriteLine("Vis bookede vognkontroller");
-            Console.WriteLine();
-
-            // implement code for viewing booked times and booking details 
-
+            
             Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til kontrollørmenuen.");
             Console.ReadKey();
 
             RunInspectorMenu();
         }
 
-        private void CarInspectionInfo()
+        private void CarInspectionInfo() 
         {
             Console.Clear();
             Console.WriteLine("Information om vognkontrol");
@@ -322,6 +381,17 @@ namespace Getting_Real
 
             //tilgængelige tider, efter de bookede er trukket fra
             return allTimes.Except(bookedTimes).ToList();
+        }
+
+        public List<DateTime> GetCompanyBookedTimes(string company)  //Henter bookinger baseret på selskab
+        {
+            var handler = new Datahandler();
+            var companyBookings = handler.LoadBookings()
+                .Where(line => line.Split(';')[2].Trim().Equals(company, StringComparison.OrdinalIgnoreCase))
+                .Select(line => DateTime.Parse(line.Split(';')[5]))
+                .ToList();
+
+            return companyBookings;
         }
 
 
