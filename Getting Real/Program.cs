@@ -9,13 +9,10 @@ namespace Getting_Real
         static void Main(string[] args)
         {
 
-            Thread logoThread = new Thread(ShowLogo);
-            logoThread.Start();
+           
 
-
-            Thread.Sleep(3000);
-
-
+            var asciiLogo = new ASCII();
+            asciiLogo.ShowSydtrafikLogo();
             ManagementSystem Sydtrafik = new ManagementSystem();
             Sydtrafik.Start();
 
