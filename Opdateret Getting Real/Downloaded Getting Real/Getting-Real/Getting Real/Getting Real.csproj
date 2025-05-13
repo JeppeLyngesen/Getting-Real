@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Getting_Real</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<StartupObject>Getting_Real.MainStarter</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Data\mock_bookings.txt" />
+    <None Remove="Data\mock_company_cars.txt" />
+    <None Remove="Data\mock_timeslots.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\mock_bookings.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\mock_company_cars.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\mock_timeslots.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
