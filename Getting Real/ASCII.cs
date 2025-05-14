@@ -6,7 +6,7 @@ namespace Getting_Real
     public class ASCII
     {
 
-        public void ShowSydtrafikLogo()
+        public static void ShowSydtrafikLogo()
         {
             
                        
@@ -17,10 +17,10 @@ namespace Getting_Real
             {
         @"                                                                               ",
         @"                                                                               ",
-        @"    ____ __     ________  _______________      ___    _______ __  ___   ___    ",
+        @"    _____ __    ________  _______________      ___    _______ __  ___   ___    ",
         @"   / ____|\ \  / /|  __  \        |       \   /   \  |  _____|  | |  | /  /    ",
         @"  | (___   \ \/ / | |  | |--|  |---|  |\  /  /  /\ \ |  |_   |  | |  |/  /     ",
-        @"   \___ \\  \  /  | |  | |  |  |   |     /  /  __  \ |  __|  |  | |     /      ",
+        @"   \___ \   \  /  | |  | |  |  |   |     /  /  __  \ |  __|  |  | |     /      ",
         @"   ____) |   | |  | |__| /  |  |   |  |\ \ /  /  \  \|  |    |  | |  |\  \     ",
         @"  |_____/    |_|  |_____/   |__|   |__| \_\__/    \__\ _|    |__| |__| \__\    ",
         @"                                                                               ",
@@ -29,15 +29,15 @@ namespace Getting_Real
             };
 
             
-            foreach (var line in asciiLogo)
+            foreach (string line in asciiLogo)
             {
                 
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(line.Substring(1, line.Length - 2));               
-                Console.WriteLine(line.Substring(line.Length - 1)); 
+                Console.WriteLine(line);
+
             }
 
-            
+
             Console.ResetColor(); 
             Console.WriteLine(); 
         }

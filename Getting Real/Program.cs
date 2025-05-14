@@ -5,27 +5,28 @@ namespace Getting_Real
     internal class Program
      
     {
-        private static ASCII logo = new ASCII();
+        
         static void Main(string[] args)
         {
 
-           
+            UserManager userManager = new UserManager();
 
-            var asciiLogo = new ASCII();
-            asciiLogo.ShowSydtrafikLogo();
+            ASCII.ShowSydtrafikLogo();
+
+            
             ManagementSystem Sydtrafik = new ManagementSystem();
+
+            Console.WriteLine("--- Velkommen til Sydtrafiks bookingsystem for vognkontrol ---");
+            Console.WriteLine("\nTryk på en vilkårlig tast for at fortsætte...");
+            Console.ReadKey(true);
+
             Sydtrafik.Start();
 
 
 
         }
 
-        static void ShowLogo()
-        {
-            Console.Clear();
-
-            logo.ShowSydtrafikLogo();
-        }
+      
 
     }
 }

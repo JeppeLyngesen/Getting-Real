@@ -1,47 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
+
 
 namespace Getting_Real
 {
     public class ManagementSystem
     {
+        private UserManager userManager = new UserManager();
+        private static Dictionary<string, string> inspectors = new Dictionary<string, string>
+        {
+            { "kontrollør1", "password1" },
+            { "kontrollør2", "password2" } // (Ikke sikkert at have her)
+        };
+
         private string _loggedInEmail;
+        private string _loggedInUser;
 
         public void Start()
         {
+            userManager.LoadUsersFromFile("users.csv");
 
             
-            Console.WriteLine("--- Velkommen til Sydtrafiks bookingsystem for vognkontrol ---");
-            Console.WriteLine("\nTryk på en vilkårlig tast for at fortsætte...");
-            Console.ReadKey(true);
 
             // Main Menu
             string title = "--- Booking af vognkontrol hos Sydtrafik ---\n\nVælg ønsket menupunkt og tast enter.\n";
-            string[] MainMenuItems = { "Bookingmenu", "Info om vognkontrol", "Opret bruger", "Afslut" };
+            string[] MainMenuItems = { "Bookingmenu", "Info om vognkontrol", "Brugeradministration", "Afslut" };
             MenuDisplay mainMenu = new MenuDisplay(title, MainMenuItems);
             int indexChosen = mainMenu.Run();
 
             switch (indexChosen)
             {
-                case 0: // Bookingmenu - book appointment, view/ change/ cancel booking
-                    ChooseUserType();
+                case 0:
+                    BookingMenu();
                     break;
-                case 1: // Info about car inspection
+                case 1:
                     CarInspectionInfo();
                     break;
-                case 2: // Register user
-                    RegisterUser(); // Functionality to be implemented
+                case 2:
+                    UserManagement();
                     break;
-                case 3: // Exit
+                case 3:                    
                     Exit();
                     return;
             }
 
         }
 
-        private void ChooseUserType()
+        private void BookingMenu()
         {
 
             string title = "--- Vælg din brugertype ---\n\nVælg ønsket brugertype og tast enter.\n";
@@ -74,10 +79,22 @@ namespace Getting_Real
 
             Console.Write("Indtast adgangskode: ");
             string password = Console.ReadLine();
-            Console.ReadKey();
 
-            RunDriverMenu();
+            User user = userManager.GetUserByEmailAndPassword(email, password); // Finder bruger i listen/ systemet
 
+
+            if (user != null)
+            {
+                Console.WriteLine("Login succesfuldt!");
+                Console.ReadKey();
+                RunDriverMenu();
+            }
+            else
+            {
+                Console.WriteLine("Login mislykkedes. Forkert e-mail eller adgangskode.");
+                Console.ReadKey();
+                Start();
+            }
 
 
         }
@@ -87,37 +104,98 @@ namespace Getting_Real
             Console.Clear();
             Console.WriteLine($"--- Login ---");
             Console.WriteLine();
-            Console.Write("Indtast din e-mail: ");
-            string email = Console.ReadLine();
+            Console.Write("Indtast dit brugernavn: ");
+            string userName = Console.ReadLine();
+            _loggedInUser = userName; // Gemmer brugernavn til senere brug
 
             Console.Write("Indtast adgangskode: ");
             string password = Console.ReadLine();
-            Console.ReadKey();
+            if (InspectorsLogin(userName, password))
+            {
+                _loggedInUser = userName; 
+                RunInspectorMenu(); 
+            }
+            else
+            {
+                Console.WriteLine("Login mislykkedes. Forkert brugernavn eller adgangskode.");
+                Console.ReadKey();
+                Start(); 
+            }
+        }
 
-            RunInspectorMenu();
+        
+        private bool InspectorsLogin(string email, string password) // Tjekker om brugernavnet og adgangskoden matcher i opslagstabellen
+        {
+            if (inspectors.ContainsKey(email))
+            {
+                return inspectors[email] == password;
+            }
+            return false; // Returner false, hvis e-mailen ikke findes i opslagstabellen
+                       
+
+        }
 
 
+        private void UserManagement()
+        {
 
+            string title = "--- Brugeradministration ---\n\nVælg ønsket menupunkt og tast enter.\n";
+            string[] UserManagementItems = { "Opret bruger", "Glemt adgangskode", "Slet bruger", "Hovedmenu", "Afslut" };
+            MenuDisplay userMenu = new MenuDisplay(title, UserManagementItems);
+            int indexChosen = userMenu.Run();
+
+            switch (indexChosen)
+            {
+                case 0:
+                    RegisterUser();
+                    break;
+                case 1:
+                    ForgottenPassword();
+                    break;
+                case 2:
+                    DeleteUser();
+                    break;
+                case 3:
+                    Start();
+                    break;
+                case 4:
+                    Exit();
+                    return;
+            }
         }
 
 
         private void RegisterUser()
         {
+
             Console.Clear();
-            Console.WriteLine("Opret ny bruger");
+            Console.WriteLine("--- Opret bruger ---");
             Console.WriteLine();
+            userManager.RegisterUser();
 
-            Console.Write("Indtast din e-mail: ");
-            string email = Console.ReadLine();
+            userManager.SaveUsersToFile("users.csv");
+            Console.WriteLine("\nBruger oprettet. Tryk på en tast for at komme til bookingmenuen.");
+            Console.ReadKey();
+            Start();
+        }
 
-            Console.Write("Indtast dit telefonnummer: ");
-            string phone = Console.ReadLine();
+        private void ForgottenPassword()
+        {
+            Console.Clear();
+            Console.WriteLine("--- Glemt adgangskode ---\n");
+            userManager.ResendPassword();
+            Console.WriteLine("\nTryk på en tast for at vende tilbage til hovedmenuen.");
+            Console.ReadKey();
+            Start();
+        }
 
-            Console.WriteLine();
-
-            Console.WriteLine("Du er nu oprettet som bruger og kan logge ind.");
-            Console.WriteLine();
-            Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til hovedmenuen.");
+        private void DeleteUser()
+        {
+            Console.Clear();
+            Console.WriteLine("--- Slet bruger ---\n");
+            userManager.DeleteUser();
+            userManager.SaveUsersToFile("users.csv");
+            Console.WriteLine("\nTryk på en tast for at vende tilbage til hovedmenuen.");
             Console.ReadKey();
             Start();
         }
@@ -345,7 +423,18 @@ namespace Getting_Real
         private void CarInspectionInfo() 
         {
             Console.Clear();
-            Console.WriteLine("Information om vognkontrol");
+            Console.WriteLine("--- Information om vognkontrol ---");
+            Console.WriteLine();
+            Console.WriteLine("Vognkontrollen skal sikre, at alle køretøjer er i god stand og opfylder sikkerhedskravene.");
+            Console.WriteLine();
+            Console.WriteLine("Kontrollen omfatter en grundig inspektion af køretøjets mekaniske og elektriske systemer, bremser, dæk, lys og sikkerhedsudstyr.");
+            Console.WriteLine();
+            Console.WriteLine("Vognkontrollen udføres af autoriserede kontrollører.");
+            Console.WriteLine();
+            Console.WriteLine("For at booke en vognkontrol, skal du vælge en ledig tid og indtaste de nødvendige oplysninger.");          
+            Console.WriteLine();
+            Console.WriteLine("Hvis du har spørgsmål eller brug for hjælp, kan du kontakte Sydtrafik.");
+
 
             Console.WriteLine();
             Console.WriteLine("Tryk på en tast for at vende tilbage til hovedmenuen.");
