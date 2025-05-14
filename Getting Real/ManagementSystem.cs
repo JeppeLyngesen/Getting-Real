@@ -447,8 +447,6 @@ namespace Getting_Real
             Console.Clear();
             Console.WriteLine("Programmet afsluttes...");
             Thread.Sleep(2000);
-
-
         }
 
         List<DateTime> GetAvailableTimes()
