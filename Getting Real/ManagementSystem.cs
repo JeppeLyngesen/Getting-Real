@@ -397,15 +397,29 @@ namespace Getting_Real
 
             ListFormatter.PrintBookingsWithCarID(userBookings);
 
-            Console.WriteLine("\nVælg et nummer for at slette booking, eller tryk [Enter] for at gå tilbage.");
+            Console.WriteLine("\nVælg et nummer for at slette booking, eller tryk [Enter] for at gå tilbage.");     //Slet en booking
+
             var input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                RunDriverMenu();
+                return;
+            }
+
             if (int.TryParse(input, out int choice) && choice >= 1 && choice <= userBookings.Count)
             {
                 allBookings.Remove(userBookings[choice - 1]);
                 handler.SaveBookings(allBookings);
                 Console.WriteLine("\nBooking slettet.");
             }
+            else
+            {
+                Console.WriteLine("\nUgyldigt valg.");
+            }
 
+            Console.WriteLine("\nTryk på en vilkårlig tast for at gå tilbage.");
+            Console.ReadKey();
             RunDriverMenu();
         }
 
