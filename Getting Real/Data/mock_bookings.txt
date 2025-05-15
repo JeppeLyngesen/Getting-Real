@@ -1,19 +1,19 @@
 1000;6128;Mikkels Taxi;kontakt@mikkelstaxi.dk;27801010;2026-02-11 12:30
 1001;6073;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;20496710;2026-02-09 12:30
 1002;6048;DanTaxi A/S;kontakt@dantaxia/s.dk;20371644;2026-02-12 13:00
-1003;6076;ØstTransport ApS;kontakt@oesttransportaps.dk;29713252;2026-02-11 10:00
+1003;6076;ï¿½stTransport ApS;kontakt@oesttransportaps.dk;29713252;2026-02-11 10:00
 1004;6088;Mikkels Transport;kontakt@mikkelstransport.dk;24478722;2026-02-13 13:45
 1005;6126;Idas Taxi;kontakt@idastaxi.dk;21655536;2026-02-11 12:00
 1006;6010;DanTaxi A/S;kontakt@dantaxia/s.dk;29254948;2026-02-10 09:30
 1007;6114;Karens Transport;kontakt@karenstransport.dk;24090324;2026-02-12 09:00
 1008;6019;DanTaxi A/S;kontakt@dantaxia/s.dk;22463782;2026-02-12 12:00
-1009;6074;SydKørsel A/S;kontakt@sydkoersela/s.dk;22996745;2026-02-10 13:45
+1009;6074;SydKï¿½rsel A/S;kontakt@sydkoersela/s.dk;22996745;2026-02-10 13:45
 1010;6111;Pers Transport;kontakt@perstransport.dk;27725155;2026-02-11 09:30
 1011;6002;DanTaxi A/S;kontakt@dantaxia/s.dk;29585886;2026-02-12 15:00
 1012;6067;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;22004595;2026-02-10 12:30
 1013;6064;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;21244215;2026-02-11 09:15
-1014;6045;DanTaxi A/S;kontakt@dantaxia/s.dk;29826989;2026-02-09 12:15
-1015;6023;DanTaxi A/S;kontakt@dantaxia/s.dk;23373442;2026-02-10 10:45
+1014;6045;Megans Taxi A/S;meganebsen@gmail.com;12345678;2026-02-09 12:15
+1015;6023;Megans Taxi A/S;meganebsen@gmail.com;12345678;2026-02-10 10:45
 1016;6017;DanTaxi A/S;kontakt@dantaxia/s.dk;23864811;2026-02-13 09:30
 1017;6137;Mias Transport;kontakt@miastransport.dk;29294722;2026-02-10 12:00
 1018;6066;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;23721779;2026-02-09 09:00
@@ -21,16 +21,15 @@
 1020;6103;Vituss Taxi;kontakt@vitusstaxi.dk;21507087;2026-02-09 12:15
 1021;6125;Rikkes Taxi;kontakt@rikkestaxi.dk;24845584;2026-02-12 14:00
 1022;6063;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;22515653;2026-02-11 13:15
-1023;6022;DanTaxi A/S;kontakt@dantaxia/s.dk;27183203;2026-02-13 10:45
 1024;6138;Lones Transport;kontakt@lonestransport.dk;24393909;2026-02-09 09:15
 1025;6102;Frejas Transport;kontakt@frejastransport.dk;29998072;2026-02-13 12:30
 1026;6018;DanTaxi A/S;kontakt@dantaxia/s.dk;20375048;2026-02-10 10:15
 1027;6003;DanTaxi A/S;kontakt@dantaxia/s.dk;26766964;2026-02-12 09:45
-1028;6077;ØstTransport ApS;kontakt@oesttransportaps.dk;20048098;2026-02-11 09:00
+1028;6077;ï¿½stTransport ApS;kontakt@oesttransportaps.dk;20048098;2026-02-11 09:00
 1029;6133;Olivers Transport;kontakt@oliverstransport.dk;27859353;2026-02-12 14:15
 1030;6060;ByTaxi ApS;kontakt@bytaxiaps.dk;29225154;2026-02-12 09:30
 1031;6025;DanTaxi A/S;kontakt@dantaxia/s.dk;20501122;2026-02-12 09:45
-1032;6081;NordKørsel ApS;kontakt@nordkoerselaps.dk;25547913;2026-02-10 10:15
+1032;6081;NordKï¿½rsel ApS;kontakt@nordkoerselaps.dk;25547913;2026-02-10 10:15
 1033;6090;Yvonnes Taxi;kontakt@yvonnestaxi.dk;23071118;2026-02-09 14:15
 1034;6096;Allans Taxi;kontakt@allanstaxi.dk;29861011;2026-02-12 10:30
 1035;6028;DanTaxi A/S;kontakt@dantaxia/s.dk;27339408;2026-02-09 14:00
@@ -66,7 +65,7 @@
 1065;6132;Frejas Taxi;kontakt@frejastaxi.dk;23471333;2026-02-10 14:00
 1066;6071;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;27464596;2026-02-12 10:15
 1067;6005;DanTaxi A/S;kontakt@dantaxia/s.dk;26564014;2026-02-12 13:30
-1068;6112;Sørens Transport;kontakt@soerenstransport.dk;27381510;2026-02-11 12:45
+1068;6112;Sï¿½rens Transport;kontakt@soerenstransport.dk;27381510;2026-02-11 12:45
 1069;6119;Karens Taxi;kontakt@karenstaxi.dk;27492412;2026-02-13 12:15
 1070;6004;DanTaxi A/S;kontakt@dantaxia/s.dk;23452859;2026-02-12 10:45
 1071;6108;Marias Transport;kontakt@mariastransport.dk;26876602;2026-02-09 08:45
@@ -88,3 +87,4 @@
 1087;6011;DanTaxi A/S;kontakt@dantaxia/s.dk;23791473;2026-02-09 12:00
 1088;6092;Sannes Transport;kontakt@sannestransport.dk;24014118;2026-02-10 15:30
 1089;6059;ByTaxi ApS;kontakt@bytaxiaps.dk;28783679;2026-02-09 10:45
+1090;6022;Megans Taxi A/S;meganebsen@gmail.com;12345678;2026-02-11 09:45

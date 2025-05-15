@@ -265,7 +265,7 @@ namespace Getting_Real
             {
                 Console.WriteLine("Booking annulleret.");
                 Console.ReadKey();
-                return;
+                RunDriverMenu();
             }
 
             DateTime selectedTimeValue = selectedTime.Value;
@@ -280,7 +280,7 @@ namespace Getting_Real
             {
                 Console.WriteLine("Ugyldig e-mail.");
                 Console.ReadKey();
-                return;
+                RunDriverMenu();
             }
 
             Console.Write("Indtast telefonnummer: ");
@@ -325,7 +325,7 @@ namespace Getting_Real
             {
                 Console.WriteLine("Denne vogn er allerede booket.");
                 Console.ReadKey();
-                return;
+                RunDriverMenu();
             }
 
             //Tildel unikt BookingID
@@ -397,25 +397,27 @@ namespace Getting_Real
 
             ListFormatter.PrintBookingsWithCarID(userBookings);
 
-            Console.WriteLine("\nVælg et nummer for at slette booking, eller tryk [Enter] for at gå tilbage.");     //Slet en booking
+            Console.WriteLine("\nIndtast VognID på booking du vil slette, eller tryk [Enter] for at gå tilbage:");
+            
+            string carIdInput = Console.ReadLine();
 
-            var input = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(input))
+            if (string.IsNullOrWhiteSpace(carIdInput))
             {
                 RunDriverMenu();
                 return;
             }
 
-            if (int.TryParse(input, out int choice) && choice >= 1 && choice <= userBookings.Count)
+            var bookingToRemove = userBookings.FirstOrDefault(b => b.Split(';')[1].Trim().Equals(carIdInput.Trim(), StringComparison.OrdinalIgnoreCase));
+
+            if (bookingToRemove != null)
             {
-                allBookings.Remove(userBookings[choice - 1]);
+                allBookings.Remove(bookingToRemove);
                 handler.SaveBookings(allBookings);
-                Console.WriteLine("\nBooking slettet.");
+                Console.WriteLine($"\nBooking med VognID '{carIdInput}' er slettet.");
             }
             else
             {
-                Console.WriteLine("\nUgyldigt valg.");
+                Console.WriteLine($"\nIngen booking fundet med VognID '{carIdInput}'.");
             }
 
             Console.WriteLine("\nTryk på en vilkårlig tast for at gå tilbage.");
