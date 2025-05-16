@@ -9,7 +9,7 @@ namespace Getting_Real
         private UserManager userManager = new UserManager();
         private static Dictionary<string, string> inspectors = new Dictionary<string, string>
         {
-            { "kontrollør1", "password1" },
+            { "bruger1", "1234" },
             { "kontrollør2", "password2" } // (Ikke sikkert at have her)
         };
 
