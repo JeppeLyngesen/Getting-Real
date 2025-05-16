@@ -112,7 +112,10 @@ namespace Getting_Real
             string password = Console.ReadLine();
             if (InspectorsLogin(userName, password))
             {
-                _loggedInUser = userName; 
+                _loggedInUser = userName;
+                Console.WriteLine($"Velkommen, {_loggedInUser}!");
+
+                Console.ReadKey();
                 RunInspectorMenu(); 
             }
             else
