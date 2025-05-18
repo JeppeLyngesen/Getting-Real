@@ -432,7 +432,12 @@ namespace Getting_Real
         {
             Console.Clear();
             Console.WriteLine("Vis bookede vognkontroller");
-            
+            var handler = new Datahandler();
+            var allBookings = handler.LoadBookings();
+
+            allBookings.ToList();
+            ListFormatter.PrintBookingsWithCompanyName(allBookings);
+
             Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til kontrollørmenuen.");
             Console.ReadKey();
 
