@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Getting_Real
 {
-    internal class UserManager
+    public class UserManager
     {
         private List<User> users = new List<User>();
 

@@ -2,7 +2,7 @@
 
 namespace Getting_Real
 {
-    internal class Program
+    public class Program
      
     {
         
