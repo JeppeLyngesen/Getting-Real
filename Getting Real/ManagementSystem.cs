@@ -295,12 +295,12 @@ namespace Getting_Real
             //Tjek om vogn allerede er booket
             var bookingLines = handler.LoadBookings();
 
-            Console.WriteLine("\n--- BOOKINGLINJER ---");
+            /* Console.WriteLine("\n--- BOOKINGLINJER ---");
             foreach (var line in bookingLines)
             {
                 Console.WriteLine($"[{line.Split(';')[1]}]"); // Vogn-ID i filen
             }
-            Console.WriteLine($"\nBrugerindtastet vognID: [{carId}]");
+            Console.WriteLine($"\nBrugerindtastet vognID: [{carId}]"); */
 
             bool carAlreadyBooked = bookingLines
                 .Any(line => line.Split(';')[1].Trim() == carId.Trim());
@@ -341,12 +341,13 @@ namespace Getting_Real
             string newLine = $"{nextBookingId};{carId};{company};{email};{phone};{selectedTime:yyyy-MM-dd HH:mm}";
             bookingLines.Add(newLine);
 
-            Console.WriteLine("[DEBUG] Skriver til bookings-fil:");
-            Console.WriteLine(Path.GetFullPath("Data/mock_bookings.txt"));
+            // Console.WriteLine("[DEBUG] Skriver til bookings-fil:");
+            // Console.WriteLine(Path.GetFullPath("Data/mock_bookings.txt"));
 
             handler.SaveBookings(bookingLines);
 
             //Bekræft
+            Console.Clear();
             Console.WriteLine("\nBooking gennemført!");
             Console.WriteLine("\nBookingdetaljer:");
             Console.WriteLine($"Booking ID : {nextBookingId}");
