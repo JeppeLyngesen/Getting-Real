@@ -14,7 +14,6 @@
 1013;6064;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;21244215;2026-02-11 09:15
 1014;6045;Megans Taxi A/S;meganebsen@gmail.com;12345678;2026-02-09 12:15
 1015;6023;Megans Taxi A/S;meganebsen@gmail.com;12345678;2026-02-10 10:45
-1016;6017;DanTaxi A/S;kontakt@dantaxia/s.dk;23864811;2026-02-13 09:30
 1017;6137;Mias Transport;kontakt@miastransport.dk;29294722;2026-02-10 12:00
 1018;6066;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;23721779;2026-02-09 09:00
 1019;6033;DanTaxi A/S;kontakt@dantaxia/s.dk;25852885;2026-02-11 13:00
@@ -70,7 +69,6 @@
 1070;6004;DanTaxi A/S;kontakt@dantaxia/s.dk;23452859;2026-02-12 10:45
 1071;6108;Marias Transport;kontakt@mariastransport.dk;26876602;2026-02-09 08:45
 1072;6053;ByTaxi ApS;kontakt@bytaxiaps.dk;24348573;2026-02-13 14:30
-1073;6117;Jakobs Transport;kontakt@jakobstransport.dk;27759088;2026-02-13 09:45
 1074;6044;DanTaxi A/S;kontakt@dantaxia/s.dk;23032455;2026-02-11 10:15
 1075;6021;DanTaxi A/S;kontakt@dantaxia/s.dk;28433909;2026-02-10 10:45
 1076;6047;DanTaxi A/S;kontakt@dantaxia/s.dk;25872961;2026-02-12 12:45
@@ -79,7 +77,6 @@
 1079;6084;Annas Taxi;kontakt@annastaxi.dk;22342845;2026-02-13 14:45
 1080;6069;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;26706549;2026-02-11 12:00
 1081;6013;DanTaxi A/S;kontakt@dantaxia/s.dk;22931206;2026-02-10 09:15
-1082;6070;VestByens Taxi ApS;kontakt@vestbyenstaxiaps.dk;24155765;2026-02-13 09:00
 1083;6061;ByTaxi ApS;kontakt@bytaxiaps.dk;27022296;2026-02-10 09:45
 1084;6136;Stefans Transport;kontakt@stefanstransport.dk;24883076;2026-02-10 09:00
 1085;6122;Camillas Transport;kontakt@camillastransport.dk;21989630;2026-02-09 15:15

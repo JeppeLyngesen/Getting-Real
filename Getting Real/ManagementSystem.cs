@@ -438,6 +438,29 @@ namespace Getting_Real
             allBookings.ToList();
             ListFormatter.PrintBookingsWithCompanyName(allBookings);
 
+            Console.WriteLine("\nIndtast VognID på booking du vil slette, eller tryk [Enter] for at gå tilbage:");
+
+            string carIdInput = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(carIdInput))
+            {
+                RunDriverMenu();
+                return;
+            }
+
+            var bookingToRemove = allBookings.FirstOrDefault(b => b.Split(';')[1].Trim().Equals(carIdInput.Trim(), StringComparison.OrdinalIgnoreCase));
+
+            if (bookingToRemove != null)
+            {
+                allBookings.Remove(bookingToRemove);
+                handler.SaveBookings(allBookings);
+                Console.WriteLine($"\nBooking med VognID '{carIdInput}' er slettet.");
+            }
+            else
+            {
+                Console.WriteLine($"\nIngen booking fundet med VognID '{carIdInput}'.");
+            }
+
             Console.WriteLine("Tryk på en vilkårlig tast for at vende tilbage til kontrollørmenuen.");
             Console.ReadKey();
 

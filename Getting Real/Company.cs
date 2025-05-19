@@ -17,30 +17,5 @@ namespace Getting_Real
             this._email = email;
             this._phoneNumber = phoneNumber;
         }
-
-        public override string ToString()
-        {
-            return $"{_name};{_email};{_phoneNumber}";
-        }
-
-        public static Company FromString(string input)
-        {
-            var parts = input.Split(";");
-
-            if (parts.Length != 3)
-            {
-                throw new FormatException("Input needs exactly one semicolon seperator");
-            }
-
-            string name = parts[0];
-            string email = parts[1];
-
-            if (!int.TryParse(parts[2], out int phoneNumber))
-            {
-                throw new FormatException("phoneNumber is not an integer");
-            }
-
-            return new Company(name, email, phoneNumber);
-        }
     }
 }
